@@ -95,21 +95,21 @@ public class Renderer : Game
 
                 if (position == (_maze.Start.X, _maze.Start.Y))
                 {
-                    DrawTile(mazeX, mazeY, Color.Green, 2);
+                    DrawTile(mazeX, mazeY, Color.Lime, 2);
 
                     continue;
                 }
 
                 if (position == (_maze.End.X, _maze.End.Y))
                 {
-                    DrawTile(mazeX, mazeY, Color.Red, 2);
+                    DrawTile(mazeX, mazeY, Color.MediumPurple, 2);
 
                     continue;
                 }
 
                 if (_path.Contains(position))
                 {
-                    DrawTile(mazeX, mazeY, Color.LimeGreen, borderSize: 2);
+                    DrawTile(mazeX, mazeY, Color.Green, borderSize: 2);
                 
                     continue;
                 }
