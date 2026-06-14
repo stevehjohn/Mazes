@@ -18,7 +18,7 @@ public class Maze
 
     public Maze(Puzzle puzzle)
     {
-        Width = puzzle.GridWidth + 1;
+        Width = puzzle.GridWidth * 2 + 1;
 
         Height = puzzle.GridHeight * 2 + 1;
 
@@ -30,10 +30,10 @@ public class Maze
 
         for (var i = 0; i < maze.HorizontalWalls.Length; i++)
         {
-            this[x, y] = maze.HorizontalWalls[i] == 1;
+            this[x++, y] = maze.HorizontalWalls[i] == 1;
 
-            x++;
-
+            this[x++, y] = maze.HorizontalWalls[i] == 1;
+            
             if (x >= Width)
             {
                 x = 1;
@@ -43,22 +43,22 @@ public class Maze
         }
 
         x = 1;
-        
+
         y = 1;
 
-        for (var i = 0; i < maze.VerticalWalls.Length; i++)
-        {
-            this[x, y] = maze.VerticalWalls[i] == 1;
-
-            x++;
-
-            if (x >= Width)
-            {
-                x = 1;
-
-                y += 2;
-            }
-        }
+        // for (var i = 0; i < maze.VerticalWalls.Length; i++)
+        // {
+        //     this[x, y] = maze.VerticalWalls[i] == 1;
+        //
+        //     x++;
+        //
+        //     if (x >= Width)
+        //     {
+        //         x = 1;
+        //
+        //         y += 2;
+        //     }
+        // }
     }
 
     public override string ToString()
