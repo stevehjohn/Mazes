@@ -48,13 +48,13 @@ public class Maze
 
         x = 2;
 
-        y = 3;
+        y = 1;
 
         for (var i = 0; i < maze.VerticalWalls.Length; i++)
         {
-            this[x, y] = maze.VerticalWalls[i] == 1;
+            this[x, y] |= maze.VerticalWalls[i] == 1;
         
-            this[x, y + 1] = maze.VerticalWalls[i] == 1;
+            this[x, y - 1] |= maze.VerticalWalls[i] == 1;
         
             x += 2;
         
@@ -73,7 +73,7 @@ public class Maze
             this[x, Bottom] = true;
         }
 
-        for (y = 0; y < Width; y++)
+        for (y = 0; y < Height; y++)
         {
             this[0, y] = true;
             
