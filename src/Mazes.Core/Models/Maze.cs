@@ -18,6 +18,10 @@ public class Maze
 
     public int Bottom => Height - 1;
 
+    public Coordinate Start;
+    
+    public Coordinate End;
+
     public bool this[int x, int y]
     {
         get => _maze[y * Width + x];
@@ -95,6 +99,8 @@ public class Maze
                 }
             }
         }
+        
+        Start = new Coordinate((maze.StartingTile / puzzle.GridWidth + maze.StartingTile % puzzle.GridWidth) * 2 + 1, maze.StartingTile / puzzle.GridWidth * 2 + 1);
     }
 
     public override string ToString()
@@ -105,6 +111,13 @@ public class Maze
         {
             for (var x = 0; x < Width; x++)
             {
+                if (x == Start.X && y == Start.Y)
+                {
+                    builder.Append('S');
+                    
+                    continue;
+                }
+
                 builder.Append(this[x, y] ? '█' : ' ');
             }
 
