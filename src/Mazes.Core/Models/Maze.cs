@@ -79,6 +79,7 @@ public class Maze
                     var my = y * 2 + 1;
 
                     this[mx, my] = true;
+                    this[mx, my + 1] = true;
                 }
             }
         }
