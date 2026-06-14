@@ -22,9 +22,13 @@ public class Maze
 
     public Maze(Puzzle puzzle)
     {
-        Width = puzzle.GridWidth * 2 + 1;
+        var gridWidth = puzzle.GridWidth;
 
-        Height = puzzle.GridHeight * 2 + 1;
+        var gridHeight = puzzle.GridHeight;
+
+        Width = gridWidth * 2 + 1;
+
+        Height = gridHeight * 2 + 1;
 
         _maze = new bool[Height * Width];
 
@@ -46,20 +50,28 @@ public class Maze
             this[Right, y] = true;
         }
 
-        for (y = 0; y < puzzle.GridHeight - 1; y++)
+        for (y = 0; y < gridHeight - 1; y++)
         {
-            for (x = 0; x < puzzle.GridWidth; x++)
+            for (x = 0; x < gridWidth; x++)
             {
-                if (maze.HorizontalWalls[y * puzzle.GridWidth + x] == 1)
-                {
-                    this[x * 2 + 1, y * 2 + 2] = true;
+                var index = y * gridWidth + x;
 
-                    this[x * 2 + 2, y * 2 + 2] = true;
+                var cell = (X: x * 2 + 1, Y: y * 2 + 2);
+
+                if (maze.HorizontalWalls[index] == 1)
+                {
+                    this[cell.X, cell.Y] = true;
+
+                    this[cell.X + 1, cell.Y] = true;
                 }
 
-                if (maze.VerticalWalls[y * puzzle.GridWidth + x] == 1)
+                cell = (X: x * 2 + 3, Y: y * 2 + 1);
+
+                if (maze.VerticalWalls[index] == 1)
                 {
-                    this[x * 2 + 2, y * 2 + 1] = true;
+                    this[cell.X - 1, cell.Y] = true;
+
+                    this[cell.X - 1, cell.Y + 1] = true;
                 }
             }
         }
