@@ -56,6 +56,11 @@ public class Maze
 
                     this[x * 2 + 2, y * 2 + 2] = true;
                 }
+
+                if (maze.VerticalWalls[y * puzzle.GridWidth + x] == 1)
+                {
+                    this[x * 2 + 2, y * 2 + 1] = true;
+                }
             }
         }
     }
