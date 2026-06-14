@@ -51,22 +51,22 @@ public class Solver
     {
         var moves = new List<(int, int)>();
 
-        if (x > 0 && _maze[x - 1, y])
+        if (x > 0 && ! _maze[x - 1, y])
         {
             moves.Add((x - 1, y));
         }
 
-        if (x < _maze.Width - 1 && _maze[x + 1, y])
+        if (x < _maze.Width - 1 && ! _maze[x + 1, y])
         {
             moves.Add((x + 1, y));
         }
 
-        if (y > 0 && _maze[x, y - 1])
+        if (y > 0 && ! _maze[x, y - 1])
         {
             moves.Add((x, y - 1));
         }
 
-        if (y < _maze.Height - 1 && _maze[x, y + 1])
+        if (y < _maze.Height - 1 && ! _maze[x, y + 1])
         {
             moves.Add((x, y + 1));
         }
