@@ -86,14 +86,14 @@ public class Renderer : Game
 
                 if (position == (_maze.Start.X, _maze.Start.Y))
                 {
-                    DrawTile(mazeX, mazeY, Color.Green, 1);
+                    DrawTile(mazeX, mazeY, Color.Green, 2);
 
                     continue;
                 }
 
                 if (position == (_maze.End.X, _maze.End.Y))
                 {
-                    DrawTile(mazeX, mazeY, Color.Red, 1);
+                    DrawTile(mazeX, mazeY, Color.Red, 2);
 
                     continue;
                 }
