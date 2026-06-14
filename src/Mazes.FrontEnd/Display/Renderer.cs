@@ -24,8 +24,6 @@ public class Renderer : Game
     private Maze _maze;
     
     private HashSet<(int X, int Y)> _path = [];
-    
-    private HashSet<(int X, int Y)> _visited = [];
 
     public Renderer()
     {
@@ -41,8 +39,6 @@ public class Renderer : Game
         var result = new Solver(_maze).Solve();
 
         _path = result.Path.ToHashSet();
-        
-        _visited = result.Visited.ToHashSet();
         
         var pixelWidth = _maze.Width * Constants.TileSize;
 
@@ -114,13 +110,6 @@ public class Renderer : Game
                 if (_path.Contains(position))
                 {
                     DrawTile(mazeX, mazeY, Color.Green, borderSize: 2);
-                
-                    continue;
-                }
-
-                if (_visited.Contains(position))
-                {
-                    DrawTile(mazeX, mazeY, Color.Orange, borderSize: 3);
                 }
             }
         }
