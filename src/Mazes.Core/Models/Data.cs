@@ -1,3 +1,5 @@
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 using JetBrains.Annotations;
 
 namespace Mazes.Core.Models;

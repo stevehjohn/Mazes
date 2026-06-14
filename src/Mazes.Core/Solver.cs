@@ -56,7 +56,7 @@ public class Solver
             moves.Add((x - 1, y));
         }
 
-        if (x < _maze.Width - 1 && ! _maze[x + 1, y])
+        if (x < _maze.Right && ! _maze[x + 1, y])
         {
             moves.Add((x + 1, y));
         }
@@ -66,7 +66,7 @@ public class Solver
             moves.Add((x, y - 1));
         }
 
-        if (y < _maze.Height - 1 && ! _maze[x, y + 1])
+        if (y < _maze.Bottom && ! _maze[x, y + 1])
         {
             moves.Add((x, y + 1));
         }
