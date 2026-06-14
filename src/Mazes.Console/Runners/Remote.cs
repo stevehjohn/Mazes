@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using Mazes.Console.Infrastructure;
+using Mazes.Core;
 using Mazes.Core.Infrastructure;
 using Mazes.Core.Models;
 using static System.Console;
@@ -94,5 +96,19 @@ public static class Remote
         WriteLine();
 
         WriteLine(maze.ToString());
+        
+        var stopwatch = Stopwatch.StartNew();
+
+        var solver = new Solver(maze);
+        
+        var result = solver.Solve();
+        
+        stopwatch.Stop();
+        
+        WriteLine(maze.ToString(result.Path));
+
+        WriteLine($@"Elapsed:     {stopwatch.Elapsed:h\:mm\:ss\.fff}");
+
+        WriteLine();
     }
 }
