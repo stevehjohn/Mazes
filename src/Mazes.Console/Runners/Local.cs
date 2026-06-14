@@ -32,6 +32,8 @@ public static class Local
         var result = solver.Solve();
         
         stopwatch.Stop();
+        
+        WriteLine(maze.ToString(result.Path));
 
         // CursorTop = puzzle.Height + 3;
         //

@@ -105,12 +105,46 @@ public class Maze
         var startY = maze.StartingTile / GridWidth;
 
         Start = new Coordinate(startX * 2 + 1, startY * 2 + 1);
-        
+
         var endX = maze.FinishTile % GridWidth;
-        
+
         var endY = maze.FinishTile / GridWidth;
 
         End = new Coordinate(endX * 2 + 1, endY * 2 + 1);
+    }
+
+    public string ToString(IEnumerable<(int X, int Y)> path)
+    {
+        var pathSet = path.ToHashSet();
+
+        var builder = new StringBuilder();
+
+        for (var y = 0; y < Height; y++)
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                if (x == Start.X && y == Start.Y)
+                {
+                    builder.Append('S');
+                }
+                else if (x == End.X && y == End.Y)
+                {
+                    builder.Append('E');
+                }
+                else if (pathSet.Contains((x, y)))
+                {
+                    builder.Append('·');
+                }
+                else
+                {
+                    builder.Append(this[x, y] ? '█' : ' ');
+                }
+            }
+
+            builder.AppendLine();
+        }
+
+        return builder.ToString();
     }
 
     public override string ToString()
