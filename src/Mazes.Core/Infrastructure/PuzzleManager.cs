@@ -20,8 +20,6 @@ public class PuzzleManager
 
     public static PuzzleManager Instance => Lazy.Value;
     
-    public int PuzzleCount => _puzzles.Count;
-
     private PuzzleManager()
     {
     }
