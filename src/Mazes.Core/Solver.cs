@@ -6,7 +6,7 @@ namespace Mazes.Core;
 public class Solver
 {
     private readonly Maze _maze;
-    
+
     public Solver(Maze maze)
     {
         _maze = maze;
@@ -14,38 +14,38 @@ public class Solver
 
     public (List<(int X, int Y)> Path, List<(int X, int Y)> Visited) Solve()
     {
+        var start = (_maze.Start.X, _maze.Start.Y);
+
+        var end = (_maze.End.X, _maze.End.Y);
+
         var queue = new Queue<(int X, int Y, List<(int X, int Y)> History)>();
 
-        queue.Enqueue((_maze.Start.X, _maze.Start.Y, []));
+        var visited = new HashSet<(int X, int Y)>
+        {
+            start
+        };
 
-        var visited = new List<(int X, int Y)>();
+        queue.Enqueue((start.X, start.Y, []));
 
         while (queue.TryDequeue(out var node))
         {
             node.History.Add((node.X, node.Y));
 
-            if (! visited.Contains((node.X, node.Y)))
+            if ((node.X, node.Y) == end)
             {
-                visited.Add((node.X, node.Y));
+                return (node.History, [..visited]);
             }
 
-            if (node.X == _maze.End.X && node.Y == _maze.End.Y)
+            foreach (var move in GetMoves(node.X, node.Y))
             {
-                return (node.History, visited);
-            }
-
-            var moves = GetMoves(node.X, node.Y);
-
-            moves.ForAll((_, m) =>
-            {
-                if (! node.History.Contains(m))
+                if (visited.Add(move))
                 {
-                    queue.Enqueue((m.X, m.Y, [..node.History]));
+                    queue.Enqueue((move.X, move.Y, [.. node.History]));
                 }
-            });
+            }
         }
 
-        return ([], visited);
+        return ([], [.. visited]);
     }
 
     private List<(int X, int Y)> GetMoves(int x, int y)
