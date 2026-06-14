@@ -11,7 +11,7 @@ namespace Mazes.Console.Infrastructure;
 [Verb("remote", HelpText = "Run puzzles from Puzzle Madness.")]
 public class RemoteOptions
 {
-    [Option('d', "difficulty", Required = true, HelpText = "The class of puzzles to solve.")]
+    [Option('d', "difficulty", Required = true, HelpText = "The class of puzzles to solve (small, medium, large, extra large, mixed).")]
     public Difficulty Difficulty { get; set; }
 
     [Option('y', "year", Required = false, HelpText = "The year of the puzzle.")]
