@@ -59,9 +59,11 @@ public class Maze
                 if (maze.HorizontalWalls[index] == 1)
                 {
                     var mx = x * 2 + 1;
+                    
                     var my = y * 2 + 2;
 
                     this[mx, my] = true;
+                    
                     this[mx + 1, my] = true;
                 }
             }
