@@ -11,7 +11,7 @@ public class Maze
     public int GridHeight { get; }
 
     public int Width { get; }
-    
+
     public int Height { get; }
 
     public int Right => Width - 1;
@@ -19,7 +19,7 @@ public class Maze
     public int Bottom => Height - 1;
 
     public Coordinate Start;
-    
+
     public Coordinate End;
 
     public bool this[int x, int y]
@@ -67,13 +67,13 @@ public class Maze
                 if (maze.HorizontalWalls[index] == 1)
                 {
                     var mx = x * 2 + 1;
-                    
+
                     var my = y * 2 + 2;
 
                     this[mx - 1, my] = true;
 
                     this[mx, my] = true;
-                    
+
                     this[mx + 1, my] = true;
                 }
             }
@@ -88,9 +88,9 @@ public class Maze
                 if (maze.VerticalWalls[index] == 1)
                 {
                     var mx = x * 2 + 2;
-                    
+
                     var my = y * 2 + 1;
-                    
+
                     this[mx, my - 1] = true;
 
                     this[mx, my] = true;
@@ -99,8 +99,18 @@ public class Maze
                 }
             }
         }
+
+        var startX = maze.StartingTile % GridWidth;
+
+        var startY = maze.StartingTile / GridWidth;
+
+        Start = new Coordinate(startX * 2 + 1, startY * 2 + 1);
         
-        Start = new Coordinate((maze.StartingTile / puzzle.GridWidth + maze.StartingTile % puzzle.GridWidth) * 2 + 1, maze.StartingTile / puzzle.GridWidth * 2 + 1);
+        var endX = maze.FinishTile % GridWidth;
+        
+        var endY = maze.FinishTile / GridWidth;
+
+        End = new Coordinate(endX * 2 + 1, endY * 2 + 1);
     }
 
     public override string ToString()
@@ -114,7 +124,14 @@ public class Maze
                 if (x == Start.X && y == Start.Y)
                 {
                     builder.Append('S');
-                    
+
+                    continue;
+                }
+
+                if (x == End.X && y == End.Y)
+                {
+                    builder.Append('E');
+
                     continue;
                 }
 
