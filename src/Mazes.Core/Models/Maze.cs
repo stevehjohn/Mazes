@@ -83,6 +83,8 @@ public class Maze
 
                     this[mx, my] = true;
                     
+                    this[mx, my - 1] = true;
+
                     this[mx, my + 1] = true;
                 }
             }
