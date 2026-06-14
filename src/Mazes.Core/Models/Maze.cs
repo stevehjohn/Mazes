@@ -62,6 +62,8 @@ public class Maze
                     
                     var my = y * 2 + 2;
 
+                    this[mx - 1, my] = true;
+
                     this[mx, my] = true;
                     
                     this[mx + 1, my] = true;
@@ -80,10 +82,10 @@ public class Maze
                     var mx = x * 2 + 2;
                     
                     var my = y * 2 + 1;
-
-                    this[mx, my] = true;
                     
                     this[mx, my - 1] = true;
+
+                    this[mx, my] = true;
 
                     this[mx, my + 1] = true;
                 }
