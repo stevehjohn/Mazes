@@ -18,29 +18,45 @@ public class Maze
 
     public Maze(Puzzle puzzle)
     {
-        Width = puzzle.GridWidth * 2 + 1;
+        Width = puzzle.GridWidth + 1;
 
         Height = puzzle.GridHeight * 2 + 1;
 
         _maze = new bool[Height * Width];
 
-        var i = 0;
+        var maze = puzzle.Data;
 
-        for (var x = 0; x <= puzzle.GridHeight; x++)
+        int x = 1, y = 2;
+
+        for (var i = 0; i < maze.HorizontalWalls.Length; i++)
         {
-            for (var y = 0; y < puzzle.GridWidth; y++)
+            this[x, y] = maze.HorizontalWalls[i] == 1;
+
+            x++;
+
+            if (x >= Width)
             {
-                this[y * 2 + 1, x * 2] = puzzle.Data.HorizontalWalls[i++] == 1;
+                x = 1;
+
+                y += 2;
             }
         }
 
-        i = 0;
+        x = 1;
+        
+        y = 1;
 
-        for (var x = 0; x < puzzle.GridHeight; x++)
+        for (var i = 0; i < maze.VerticalWalls.Length; i++)
         {
-            for (var y = 0; y <= puzzle.GridWidth; y++)
+            this[x, y] = maze.VerticalWalls[i] == 1;
+
+            x++;
+
+            if (x >= Width)
             {
-                this[y * 2, x * 2 + 1] = puzzle.Data.VerticalWalls[i++] == 1;
+                x = 1;
+
+                y += 2;
             }
         }
     }
