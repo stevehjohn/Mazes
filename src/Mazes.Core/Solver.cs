@@ -12,7 +12,7 @@ public class Solver
         _maze = maze;
     }
 
-    public (List<(int X, int Y)> Path, List<(int X, int Y)> Visited) SolveMaze()
+    public (List<(int X, int Y)> Path, List<(int X, int Y)> Visited) Solve()
     {
         var queue = new Queue<(int X, int Y, List<(int X, int Y)> History)>();
 

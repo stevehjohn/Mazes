@@ -1,6 +1,7 @@
 
 using System.Diagnostics;
 using Mazes.Console.Infrastructure;
+using Mazes.Core;
 using Mazes.Core.Infrastructure;
 using static System.Console;
 
@@ -25,8 +26,10 @@ public static class Local
         WriteLine(maze.ToString());
         
         var stopwatch = Stopwatch.StartNew();
+
+        var solver = new Solver(maze);
         
-        //var result = solver.Solve(puzzle);
+        var result = solver.Solve();
 
         // CursorTop = puzzle.Height + 3;
         //
