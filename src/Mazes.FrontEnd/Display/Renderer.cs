@@ -9,7 +9,7 @@ namespace Mazes.FrontEnd.Display;
 public class Renderer : Game
 {
     // ReSharper disable once NotAccessedField.Local
-    private GraphicsDeviceManager _graphics;
+    private readonly GraphicsDeviceManager _graphics;
 
     private Texture2D _texture;
 
