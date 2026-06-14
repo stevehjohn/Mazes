@@ -13,6 +13,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{76279489-0080-491D-BE14-050BABE9F0C1}"
 	ProjectSection(SolutionItems) = preProject
 		..\console.sh = ..\console.sh
+		..\run.sh = ..\run.sh
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mazes.FrontEnd", "Mazes.FrontEnd\Mazes.FrontEnd.csproj", "{EE386D80-FA20-4A71-BAD7-A2A9B02013D1}"
