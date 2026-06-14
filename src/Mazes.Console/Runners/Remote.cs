@@ -83,6 +83,8 @@ public class Remote
 
                 break;
             }
+            
+            var maze = puzzle.Value.Maze;
 
             WriteLine();
             
@@ -90,9 +92,11 @@ public class Remote
 
             WriteLine();
             
-            WriteLine($"Solving {options.Difficulty.ToString().ToLowerInvariant()} puzzle for {puzzle.Value.Date:R} ({puzzle.Value.Maze.Width}x{puzzle.Value.Maze.Height}). {i + 1:N0} / {options.Quantity:N0}.");
+            WriteLine($"Solving {options.Difficulty.ToString().ToLowerInvariant()} puzzle for {puzzle.Value.Date:R} ({maze.Width}x{maze.Height}). {i + 1:N0} / {options.Quantity:N0}.");
 
             WriteLine();
+            
+            WriteLine(maze.ToString());
         }
     }
 }
