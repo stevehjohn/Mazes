@@ -1,3 +1,6 @@
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable MemberCanBePrivate.Global
+
 using CommandLine;
 using JetBrains.Annotations;
 using Mazes.Core.Models;
@@ -35,7 +38,7 @@ public class RemoteOptions
         if (Day.HasValue)
         {
             Month ??= DateTime.Now.Month;
-            
+
             Year ??= DateTime.Now.Year;
 
             Quantity = 1;
