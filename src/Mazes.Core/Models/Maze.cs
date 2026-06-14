@@ -6,8 +6,12 @@ public class Maze
 {
     private readonly bool[] _maze;
 
-    public int Width { get; }
+    public int GridWidth { get; }
 
+    public int GridHeight { get; }
+
+    public int Width { get; }
+    
     public int Height { get; }
 
     public int Right => Width - 1;
@@ -22,13 +26,13 @@ public class Maze
 
     public Maze(Puzzle puzzle)
     {
-        var gridWidth = puzzle.GridWidth;
+        GridWidth = puzzle.GridWidth;
 
-        var gridHeight = puzzle.GridHeight;
+        GridHeight = puzzle.GridHeight;
 
-        Width = gridWidth * 2 + 1;
+        Width = GridWidth * 2 + 1;
 
-        Height = gridHeight * 2 + 1;
+        Height = GridHeight * 2 + 1;
 
         _maze = new bool[Height * Width];
 
@@ -50,11 +54,11 @@ public class Maze
             this[Right, y] = true;
         }
 
-        for (y = 0; y < gridHeight - 1; y++)
+        for (y = 0; y < GridHeight - 1; y++)
         {
-            for (x = 0; x < gridWidth; x++)
+            for (x = 0; x < GridWidth; x++)
             {
-                var index = y * gridWidth + x;
+                var index = y * GridWidth + x;
 
                 if (maze.HorizontalWalls[index] == 1)
                 {
@@ -71,11 +75,11 @@ public class Maze
             }
         }
 
-        for (y = 0; y < gridHeight; y++)
+        for (y = 0; y < GridHeight; y++)
         {
-            for (x = 0; x < gridWidth - 1; x++)
+            for (x = 0; x < GridWidth - 1; x++)
             {
-                var index = y * (gridWidth - 1) + x;
+                var index = y * (GridWidth - 1) + x;
 
                 if (maze.VerticalWalls[index] == 1)
                 {
