@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Mazes.Core.Models;
 
 public class Maze
@@ -43,6 +45,18 @@ public class Maze
 
     public override string ToString()
     {
-        return string.Empty;
+        var builder = new StringBuilder();
+        
+        for (var y = 0; y < Height; y++)
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                builder.Append(_maze[y * Width + x] ? '█': ' ');
+            }
+            
+            builder.AppendLine();
+        }
+
+        return builder.ToString();
     }
 }
