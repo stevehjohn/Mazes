@@ -121,7 +121,7 @@ public class Renderer : Game
                 if (_visited.Contains(position))
                 {
                     DrawTile(mazeX, mazeY, Color.Orange, borderSize: 3);
-s                }
+                }
             }
         }
     }
