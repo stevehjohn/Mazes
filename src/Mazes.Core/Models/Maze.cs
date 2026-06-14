@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace Mazes.Core.Models;
@@ -9,6 +10,10 @@ public class Maze
     public int Width { get; }
 
     public int Height { get; }
+    
+    public int Right => Width - 1;
+    
+    public int Bottom => Height - 1;
 
     public bool this[int x, int y]
     {
@@ -59,6 +64,20 @@ public class Maze
         //         y += 2;
         //     }
         // }
+
+        for (x = 0; x < Width; x++)
+        {
+            this[x, 0] = true;
+            
+            this[x, Bottom] = true;
+        }
+
+        for (y = 0; y < Width; y++)
+        {
+            this[0, y] = true;
+            
+            this[Right, y] = true;
+        }
     }
 
     public override string ToString()
