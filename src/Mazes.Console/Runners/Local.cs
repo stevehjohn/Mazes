@@ -18,7 +18,7 @@ public static class Local
         
         var maze = PuzzleManager.Instance.GetPuzzle(puzzleNumber);
         
-        WriteLine($"Puzzle number: {puzzleNumber} ({maze.Width}x{maze.Height})");
+        WriteLine($"Puzzle number: {puzzleNumber} ({maze.GridWidth}x{maze.GridHeight})");
         
         WriteLine();
 
