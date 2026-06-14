@@ -12,7 +12,7 @@ public class PuzzleManager
         PropertyNameCaseInsensitive = true
     };
 
-    public Maze GetPuzzle(int puzzleNumber) => _puzzles[puzzleNumber].Clone();
+    public Maze GetPuzzle(int puzzleNumber) => _puzzles[puzzleNumber]; //.Clone();
         
     public static string Path { get; set; }
 
