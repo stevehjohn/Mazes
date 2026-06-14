@@ -15,6 +15,6 @@ public static class EntryPoint
         });
 
         parser.ParseArguments<RemoteOptions>(arguments)
-            .WithParsed(options => new Remote().Run(options));
+            .WithParsed(Remote.Run);
     }
 }
