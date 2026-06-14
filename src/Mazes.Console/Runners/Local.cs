@@ -30,6 +30,8 @@ public static class Local
         var solver = new Solver(maze);
         
         var result = solver.Solve();
+        
+        stopwatch.Stop();
 
         // CursorTop = puzzle.Height + 3;
         //
