@@ -130,7 +130,7 @@ public sealed class PuzzleClient : IDisposable
 
             var puzzles = dom.DocumentNode.SelectNodes("//td[@class='puzzleNotDone'] | //td[@class='puzzleSaveAvailable']");
 
-            if (puzzles != null && puzzles.Count > 0)
+            if (puzzles.Count > 0)
             {
                 var puzzle = puzzles[0];
 
