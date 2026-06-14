@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{7627
 		..\console.sh = ..\console.sh
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mazes.FrontEnd", "Mazes.FrontEnd\Mazes.FrontEnd.csproj", "{EE386D80-FA20-4A71-BAD7-A2A9B02013D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +31,9 @@ Global
 		{2FE3E5A1-F3C3-425E-988F-416A4A2BAB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FE3E5A1-F3C3-425E-988F-416A4A2BAB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FE3E5A1-F3C3-425E-988F-416A4A2BAB02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE386D80-FA20-4A71-BAD7-A2A9B02013D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE386D80-FA20-4A71-BAD7-A2A9B02013D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE386D80-FA20-4A71-BAD7-A2A9B02013D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE386D80-FA20-4A71-BAD7-A2A9B02013D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
