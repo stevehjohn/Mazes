@@ -8,8 +8,12 @@ public class Maze
     
     public int Height { get; }
     
-    public bool this[int x, int y] => _maze[y * Width + x];
-    
+    public bool this[int x, int y]
+    {
+        get => _maze[y * Width + x];
+        set => _maze[y * Width + x] = value;
+    }
+
     public Maze(Puzzle puzzle)
     {
         Width = puzzle.GridWidth * 2 + 1;
@@ -19,6 +23,22 @@ public class Maze
         _maze = new bool[Height * Width];
         
         Array.Fill(_maze, true);
+
+        int x = 1, y = 2;
+
+        for (var i = 0; i < puzzle.Data.HorizontalWalls.Length; i++)
+        {
+            this[x, y] =  puzzle.Data.HorizontalWalls[i] == 1;
+
+            x += 2;
+
+            if (x >= Width)
+            {
+                x = 1;
+                
+                y += 2;
+            }
+        }
     }
 
     public override string ToString()
