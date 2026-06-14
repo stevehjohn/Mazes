@@ -1,3 +1,4 @@
+using System;
 using Mazes.Core.Infrastructure;
 using Mazes.Core.Models;
 using Mazes.FrontEnd.Infrastructure;
@@ -31,13 +32,13 @@ public class Renderer : Game
         _maze = PuzzleManager.Instance.GetPuzzle(0);
 
         var pixelWidth = _maze.Width * Constants.TileSize;
-        
+
         var pixelHeight = _maze.Height * Constants.TileSize;
 
         _graphics.PreferredBackBufferWidth = pixelWidth;
-        
+
         _graphics.PreferredBackBufferHeight = pixelHeight;
-        
+
         _graphics.ApplyChanges();
 
         _data = new Color[pixelWidth * pixelHeight];
@@ -68,19 +69,69 @@ public class Renderer : Game
 
     private void DrawIntoData()
     {
-        var pixelWidth = _maze.Width * Constants.TileSize;
-        
-        var pixelHeight = _maze.Height * Constants.TileSize;
+        Array.Fill(_data, Color.Black);
 
-        for (var y = 0; y < pixelHeight; y++)
+        for (var mazeY = 0; mazeY < _maze.Height; mazeY++)
         {
-            for (var x = 0; x < pixelWidth; x++)
+            for (var mazeX = 0; mazeX < _maze.Width; mazeX++)
             {
-                var mazeX = x / Constants.TileSize;
-                
-                var mazeY = y / Constants.TileSize;
+                var position = (mazeX, mazeY);
 
-                _data[x + y * pixelWidth] = _maze[mazeX, mazeY] ? Color.Black : new Color(64, 64, 64);
+                if (_maze[mazeX, mazeY])
+                {
+                    DrawTile(mazeX, mazeY, new Color(64, 64, 64), 0);
+
+                    continue;
+                }
+
+                if (position == (_maze.Start.X, _maze.Start.Y))
+                {
+                    DrawTile(mazeX, mazeY, Color.Green, 1);
+
+                    continue;
+                }
+
+                if (position == (_maze.End.X, _maze.End.Y))
+                {
+                    DrawTile(mazeX, mazeY, Color.Red, 1);
+
+                    continue;
+                }
+
+                // if (_path.Contains(position))
+                // {
+                //     DrawTile(mazeX, mazeY, Color.LimeGreen, borderSize: 2);
+                //
+                //     continue;
+                // }
+                //
+                // if (_visited.Contains(position))
+                // {
+                //     DrawTile(mazeX, mazeY, new Color(120, 80, 30), borderSize: 3);
+                //
+                //     continue;
+                // }
+            }
+        }
+    }
+
+    private void DrawTile(int mazeX, int mazeY, Color color, int borderSize)
+    {
+        var pixelWidth = _maze.Width * Constants.TileSize;
+
+        var startX = mazeX * Constants.TileSize + borderSize;
+        
+        var startY = mazeY * Constants.TileSize + borderSize;
+
+        var endX = (mazeX + 1) * Constants.TileSize - borderSize;
+        
+        var endY = (mazeY + 1) * Constants.TileSize - borderSize;
+
+        for (var y = startY; y < endY; y++)
+        {
+            for (var x = startX; x < endX; x++)
+            {
+                _data[x + y * pixelWidth] = color;
             }
         }
     }
