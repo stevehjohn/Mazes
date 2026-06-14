@@ -102,7 +102,7 @@ public class Renderer : Game
 
                 if (position == (_maze.End.X, _maze.End.Y))
                 {
-                    DrawTile(mazeX, mazeY, Color.MediumPurple, 2);
+                    DrawTile(mazeX, mazeY, Color.Aqua, 2);
 
                     continue;
                 }
