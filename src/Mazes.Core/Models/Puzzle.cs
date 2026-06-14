@@ -1,3 +1,6 @@
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
+
 namespace Mazes.Core.Models;
 
 public class Puzzle
@@ -7,6 +10,4 @@ public class Puzzle
     public int GridHeight { get; set; }
     
     public Data Data { get; set; }
-    
-    public Source Source { get; set; }
 }

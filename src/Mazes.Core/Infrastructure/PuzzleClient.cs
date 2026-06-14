@@ -1,5 +1,4 @@
 using System.Net;
-using System.Text;
 using System.Text.Json;
 using HtmlAgilityPack;
 using Mazes.Core.Models;
@@ -13,8 +12,6 @@ public sealed class PuzzleClient : IDisposable
     private readonly HttpClientHandler _handler;
 
     private readonly HttpClient _client;
-
-    private readonly int _userId;
 
     private int _latestYear = 2026;
 
@@ -39,11 +36,6 @@ public sealed class PuzzleClient : IDisposable
         {
             var parts = line.Split('=');
 
-            if (parts[0].Equals("userid", StringComparison.InvariantCultureIgnoreCase))
-            {
-                _userId = int.Parse(parts[1]);
-            }
-
             cookieContainer.Add(new Uri(BaseUri), new Cookie(parts[0], parts[1]));
         }
 
@@ -63,7 +55,7 @@ public sealed class PuzzleClient : IDisposable
         _client.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.9");
     }
 
-    public (DateOnly Date, Grid Grid, int Variant)? GetPuzzle(Difficulty difficulty, DateOnly date)
+    public (DateOnly Date, Maze Maze)? GetPuzzle(Difficulty difficulty, DateOnly date)
     {
         var year = date.Year;
 
@@ -81,10 +73,10 @@ public sealed class PuzzleClient : IDisposable
 
         var puzzle = JsonSerializer.Deserialize<Puzzle>(puzzleJson, _jsonSerializerOptions);
 
-        return (date, new Grid(puzzle), puzzle.Source.Variant);
+        return (date, new Maze(puzzle));
     }
 
-    public (DateOnly Date, Grid Grid, int Variant)? GetNextPuzzle(Difficulty difficulty)
+    public (DateOnly Date, Maze Maze)? GetNextPuzzle(Difficulty difficulty)
     {
         var nextPuzzleDate = GetOldestIncompletePuzzleDate(difficulty);
 
@@ -111,7 +103,7 @@ public sealed class PuzzleClient : IDisposable
 
         var puzzle = JsonSerializer.Deserialize<Puzzle>(puzzleJson, _jsonSerializerOptions);
 
-        return (nextPuzzleDate.Value, new Grid(puzzle), puzzle.Source.Variant);
+        return (nextPuzzleDate.Value, new Maze(puzzle));
     }
 
     private DateOnly? GetOldestIncompletePuzzleDate(Difficulty difficulty)
