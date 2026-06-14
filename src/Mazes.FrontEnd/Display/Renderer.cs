@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Mazes.Core;
 using Mazes.Core.Infrastructure;
 using Mazes.Core.Models;
 using Mazes.FrontEnd.Infrastructure;
@@ -19,6 +22,8 @@ public class Renderer : Game
     private SpriteBatch _spriteBatch;
 
     private Maze _maze;
+    
+    private HashSet<(int X, int Y)> _path = [];
 
     public Renderer()
     {
@@ -31,6 +36,10 @@ public class Renderer : Game
     {
         _maze = PuzzleManager.Instance.GetPuzzle(0);
 
+        var result = new Solver(_maze).Solve();
+
+        _path = result.Path.ToHashSet();
+        
         var pixelWidth = _maze.Width * Constants.TileSize;
 
         var pixelHeight = _maze.Height * Constants.TileSize;
@@ -98,13 +107,13 @@ public class Renderer : Game
                     continue;
                 }
 
-                // if (_path.Contains(position))
-                // {
-                //     DrawTile(mazeX, mazeY, Color.LimeGreen, borderSize: 2);
-                //
-                //     continue;
-                // }
-                //
+                if (_path.Contains(position))
+                {
+                    DrawTile(mazeX, mazeY, Color.LimeGreen, borderSize: 2);
+                
+                    continue;
+                }
+
                 // if (_visited.Contains(position))
                 // {
                 //     DrawTile(mazeX, mazeY, new Color(120, 80, 30), borderSize: 3);
