@@ -1,4 +1,3 @@
-using Mazes.Core.Extensions;
 using Mazes.Core.Models;
 
 namespace Mazes.Core;
