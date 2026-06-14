@@ -1,1 +1,3 @@
-dotnet run --project src/Mazes.Console/Mazes.Console.csproj -c Release $*
+cd src/Mazes.Console
+dotnet run -c Release $*
+cd -
