@@ -1,4 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace Mazes.Core.Models;
@@ -47,23 +46,25 @@ public class Maze
             }
         }
 
-        x = 1;
+        x = 0;
 
         y = 1;
 
-        // for (var i = 0; i < maze.VerticalWalls.Length; i++)
-        // {
-        //     this[x, y] = maze.VerticalWalls[i] == 1;
-        //
-        //     x++;
-        //
-        //     if (x >= Width)
-        //     {
-        //         x = 1;
-        //
-        //         y += 2;
-        //     }
-        // }
+        for (var i = 0; i < maze.VerticalWalls.Length; i++)
+        {
+            this[x, y] = maze.VerticalWalls[i] == 1;
+        
+            this[x, y + 1] = maze.VerticalWalls[i] == 1;
+        
+            x += 2;
+        
+            if (x >= Width)
+            {
+                x = 1;
+        
+                y += 2;
+            }
+        }
 
         for (x = 0; x < Width; x++)
         {
