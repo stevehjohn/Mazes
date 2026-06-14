@@ -14,7 +14,8 @@ public static class EntryPoint
             settings.HelpWriter = System.Console.Out;
         });
 
-        parser.ParseArguments<RemoteOptions>(arguments)
-            .WithParsed(Remote.Run);
+        parser.ParseArguments<LocalOptions, RemoteOptions>(arguments)
+            .WithParsed<LocalOptions>(Local.Run)
+            .WithParsed<RemoteOptions>(Remote.Run);
     }
 }

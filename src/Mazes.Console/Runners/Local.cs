@@ -1,5 +1,6 @@
 
 using System.Diagnostics;
+using Mazes.Console.Infrastructure;
 using Mazes.Core.Infrastructure;
 using static System.Console;
 
@@ -7,11 +8,13 @@ namespace Mazes.Console.Runners;
 
 public static class Local
 {
-    public static void Run(int puzzleNumber)
+    public static void Run(LocalOptions options)
     {
         Clear();
 
         PuzzleManager.Path = "Data/Puzzles.json";
+        
+        var puzzleNumber = options.PuzzleNumber;
         
         var maze = PuzzleManager.Instance.GetPuzzle(puzzleNumber);
         
