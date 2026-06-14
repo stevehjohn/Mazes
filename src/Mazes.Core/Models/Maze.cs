@@ -25,7 +25,7 @@ public class Maze
     public bool this[int x, int y]
     {
         get => _maze[y * Width + x];
-        init => _maze[y * Width + x] = value;
+        private init => _maze[y * Width + x] = value;
     }
 
     public Maze(Puzzle puzzle)
