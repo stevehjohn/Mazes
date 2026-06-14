@@ -50,6 +50,7 @@ public class Maze
         {
             for (x = 0; x < puzzle.GridWidth; x++)
             {
+                this[x * 2 + 1, y * 2 + 1] = true;
             }
         }
     }
