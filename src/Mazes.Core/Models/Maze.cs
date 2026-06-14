@@ -46,11 +46,16 @@ public class Maze
             this[Right, y] = true;
         }
 
-        for (y = 0; y < puzzle.GridHeight; y++)
+        for (y = 0; y < puzzle.GridHeight - 1; y++)
         {
             for (x = 0; x < puzzle.GridWidth; x++)
             {
-                this[x * 2 + 1, y * 2 + 1] = true;
+                if (maze.HorizontalWalls[y * puzzle.GridWidth + x] == 1)
+                {
+                    this[x * 2 + 1, y * 2 + 2] = true;
+
+                    this[x * 2 + 2, y * 2 + 2] = true;
+                }
             }
         }
     }
