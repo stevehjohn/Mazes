@@ -9,9 +9,9 @@ public class Maze
     public int Width { get; }
 
     public int Height { get; }
-    
+
     public int Right => Width - 1;
-    
+
     public int Bottom => Height - 1;
 
     public bool this[int x, int y]
@@ -30,53 +30,19 @@ public class Maze
 
         var maze = puzzle.Data;
 
-        int x = 1, y = 2;
-
-        for (var i = 0; i < maze.HorizontalWalls.Length; i++)
-        {
-            this[x++, y] = maze.HorizontalWalls[i] == 1;
-
-            this[x++, y] = maze.HorizontalWalls[i] == 1;
-            
-            if (x >= Width)
-            {
-                x = 1;
-
-                y += 2;
-            }
-        }
-
-        x = 2;
-
-        y = 1;
-
-        for (var i = 0; i < maze.VerticalWalls.Length; i++)
-        {
-            this[x, y] |= maze.VerticalWalls[i] == 1;
-        
-            this[x, y - 1] |= maze.VerticalWalls[i] == 1;
-        
-            x += 2;
-        
-            if (x >= Width)
-            {
-                x = 2;
-        
-                y += 2;
-            }
-        }
+        int x, y;
 
         for (x = 0; x < Width; x++)
         {
             this[x, 0] = true;
-            
+
             this[x, Bottom] = true;
         }
 
         for (y = 0; y < Height; y++)
         {
             this[0, y] = true;
-            
+
             this[Right, y] = true;
         }
     }
