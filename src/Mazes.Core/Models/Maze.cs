@@ -45,6 +45,13 @@ public class Maze
 
             this[Right, y] = true;
         }
+
+        for (y = 0; y < puzzle.GridHeight; y++)
+        {
+            for (x = 0; x < puzzle.GridWidth; x++)
+            {
+            }
+        }
     }
 
     public override string ToString()
