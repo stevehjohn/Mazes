@@ -5,9 +5,9 @@ using static System.Console;
 
 namespace Mazes.Console.Runners;
 
-public class Remote
+public static class Remote
 {
-    public void Run(RemoteOptions options)
+    public static void Run(RemoteOptions options)
     {
         var validationResult = options.Validate();
 
