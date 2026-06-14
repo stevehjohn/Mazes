@@ -46,9 +46,9 @@ public class Maze
             }
         }
 
-        x = 0;
+        x = 2;
 
-        y = 1;
+        y = 3;
 
         for (var i = 0; i < maze.VerticalWalls.Length; i++)
         {
@@ -60,7 +60,7 @@ public class Maze
         
             if (x >= Width)
             {
-                x = 1;
+                x = 2;
         
                 y += 2;
             }
