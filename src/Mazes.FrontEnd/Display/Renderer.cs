@@ -21,11 +21,7 @@ public class Renderer : Game
 
     public Renderer()
     {
-        _graphics = new GraphicsDeviceManager(this)
-        {
-            PreferredBackBufferWidth = 20 * Constants.TileSize,
-            PreferredBackBufferHeight = 20 * Constants.TileSize
-        };
+        _graphics = new GraphicsDeviceManager(this);
 
         PuzzleManager.Path = "Data/Puzzles.json";
     }
@@ -34,11 +30,21 @@ public class Renderer : Game
     {
         _maze = PuzzleManager.Instance.GetPuzzle(0);
 
-        _data = new Color[_maze.Width * Constants.TileSize * _maze.Height * Constants.TileSize];
+        var pixelWidth = _maze.Width * Constants.TileSize;
+        
+        var pixelHeight = _maze.Height * Constants.TileSize;
+
+        _graphics.PreferredBackBufferWidth = pixelWidth;
+        
+        _graphics.PreferredBackBufferHeight = pixelHeight;
+        
+        _graphics.ApplyChanges();
+
+        _data = new Color[pixelWidth * pixelHeight];
 
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        _texture = new Texture2D(GraphicsDevice, _maze.Width * Constants.TileSize, _maze.Height * Constants.TileSize);
+        _texture = new Texture2D(GraphicsDevice, pixelWidth, pixelHeight);
 
         base.LoadContent();
     }
@@ -49,11 +55,11 @@ public class Renderer : Game
 
         GraphicsDevice.Clear(Color.Black);
 
-        _spriteBatch.Begin(SpriteSortMode.FrontToBack);
-
         _texture.SetData(_data);
 
-        _spriteBatch.Draw(_texture, new Vector2(0, 0), new Rectangle(0, 0, _maze.Width * Constants.TileSize, _maze.Height * Constants.TileSize), Color.White);
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
+        _spriteBatch.Draw(_texture, Vector2.Zero, Color.White);
 
         _spriteBatch.End();
 
@@ -62,56 +68,19 @@ public class Renderer : Game
 
     private void DrawIntoData()
     {
-        for (var x = 0; x < _maze.Width * Constants.TileSize; x++)
+        var pixelWidth = _maze.Width * Constants.TileSize;
+        
+        var pixelHeight = _maze.Height * Constants.TileSize;
+
+        for (var y = 0; y < pixelHeight; y++)
         {
-            for (var y = 0; y < _maze.Height * Constants.TileSize; y++)
+            for (var x = 0; x < pixelWidth; x++)
             {
-                // if (_mazeSolution[x / Constants.TileSize, y / Constants.TileSize])
-                // {
-                //     if (x % Constants.TileSize > 2 && x % Constants.TileSize < Constants.TileSize - 3
-                //                                    && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
-                //     {
-                //         _data[x + y * _maze.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 192, 0, 255);
-                //
-                //         continue;
-                //     }
-                //
-                //     if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2
-                //                                    && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
-                //     {
-                //         _data[x + y * _maze.Width * Constants.TileSize] = Color.FromNonPremultiplied(0, 96, 0, 255);
-                //
-                //         continue;
-                //     }
-                // }
+                var mazeX = x / Constants.TileSize;
+                
+                var mazeY = y / Constants.TileSize;
 
-                // if (_mazeVisited[x / Constants.TileSize, y / Constants.TileSize])
-                // {
-                //     if (x % Constants.TileSize > 2 && x % Constants.TileSize < Constants.TileSize - 3
-                //                                    && y % Constants.TileSize > 2 && y % Constants.TileSize < Constants.TileSize - 3)
-                //     {
-                //         _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(171, 107, 0, 255);
-                //
-                //         continue;
-                //     }
-                //
-                //     if (x % Constants.TileSize > 1 && x % Constants.TileSize < Constants.TileSize - 2
-                //                                    && y % Constants.TileSize > 1 && y % Constants.TileSize < Constants.TileSize - 2)
-                //     {
-                //         _data[x + y * Constants.Width * Constants.TileSize] = Color.FromNonPremultiplied(107, 43, 0, 255);
-                //
-                //         continue;
-                //     }
-                // }
-
-                if (! _maze[x / Constants.TileSize, y / Constants.TileSize])
-                {
-                    _data[x + y * _maze.Width * Constants.TileSize] = Color.FromNonPremultiplied(64, 64, 64, 255);
-                }
-                else
-                {
-                    _data[x + y * _maze.Width * Constants.TileSize] = Color.Black;
-                }
+                _data[x + y * pixelWidth] = _maze[mazeX, mazeY] ? Color.Black : new Color(64, 64, 64);
             }
         }
     }
