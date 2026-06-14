@@ -35,15 +35,7 @@ public static class Local
         
         WriteLine(maze.ToString(result.Path));
 
-        // CursorTop = puzzle.Height + 3;
-        //
-        // WriteLine(puzzle.ToString());
-        //
-        // WriteLine($"Solve state: {result}                 ");
-        //
-        // WriteLine($"Steps:       {_count:N0}              ");
-        //         
-        // WriteLine($@"Elapsed:     {_stopwatch.Elapsed:h\:mm\:ss\.fff}");
+        WriteLine($@"Elapsed:     {stopwatch.Elapsed:h\:mm\:ss\.fff}");
 
         WriteLine();
     }    
