@@ -56,22 +56,29 @@ public class Maze
             {
                 var index = y * gridWidth + x;
 
-                var cell = (X: x * 2 + 1, Y: y * 2 + 2);
-
                 if (maze.HorizontalWalls[index] == 1)
                 {
-                    this[cell.X, cell.Y] = true;
+                    var mx = x * 2 + 1;
+                    var my = y * 2 + 2;
 
-                    this[cell.X + 1, cell.Y] = true;
+                    this[mx, my] = true;
+                    this[mx + 1, my] = true;
                 }
+            }
+        }
 
-                cell = (X: x * 2 + 3, Y: y * 2 + 1);
+        for (y = 0; y < gridHeight; y++)
+        {
+            for (x = 0; x < gridWidth - 1; x++)
+            {
+                var index = y * (gridWidth - 1) + x;
 
                 if (maze.VerticalWalls[index] == 1)
                 {
-                    this[cell.X - 1, cell.Y] = true;
+                    var mx = x * 2 + 2;
+                    var my = y * 2 + 1;
 
-                    this[cell.X - 1, cell.Y + 1] = true;
+                    this[mx, my] = true;
                 }
             }
         }
