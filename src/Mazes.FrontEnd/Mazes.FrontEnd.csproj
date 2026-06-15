@@ -6,6 +6,7 @@
         <PublishReadyToRun>false</PublishReadyToRun>
         <TieredCompilation>false</TieredCompilation>
         <LangVersion>14</LangVersion>
+        <AssemblyName>Mazes</AssemblyName>
     </PropertyGroup>
     <PropertyGroup>
         <ApplicationManifest>app.manifest</ApplicationManifest>
