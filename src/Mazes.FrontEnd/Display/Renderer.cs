@@ -37,6 +37,8 @@ public class Renderer : Game
     {
         Window.Title = "Mazes";
         
+        IsMouseVisible = true;
+        
         var client = new PuzzleClient();
         
         WriteLine("Loading maze...");
