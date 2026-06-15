@@ -41,7 +41,7 @@ public class Renderer : Game
         
         WriteLine("Loading maze...");
 
-        var response = client.GetPuzzle(Difficulty.Small, DateOnly.FromDateTime(DateTime.Now.Date));
+        var response = client.GetPuzzle(Difficulty.ExtraLarge, DateOnly.FromDateTime(DateTime.Now.Date));
 
         if (response == null)
         {
