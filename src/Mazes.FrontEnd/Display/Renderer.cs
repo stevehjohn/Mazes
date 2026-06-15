@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Mazes.Core;
 using Mazes.Core.Infrastructure;
@@ -53,9 +54,15 @@ public class Renderer : Game
         }
 
         _maze = response.Value.Maze;
+
+        var stopwatch = Stopwatch.StartNew();
             
         var result = new Solver(_maze).Solve();
+        
+        stopwatch.Stop();
 
+        WriteLine(@$"Solved in {stopwatch.Elapsed:ss\.fff}.");
+            
         _path = result.Path.ToHashSet();
         
         var pixelWidth = _maze.Width * Constants.TileSize;
