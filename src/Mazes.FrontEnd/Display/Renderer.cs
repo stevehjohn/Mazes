@@ -7,6 +7,7 @@ using Mazes.Core.Models;
 using Mazes.FrontEnd.Infrastructure;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using static System.Console;
 
 namespace Mazes.FrontEnd.Display;
 
@@ -34,8 +35,21 @@ public class Renderer : Game
 
     protected override void LoadContent()
     {
-        _maze = PuzzleManager.Instance.GetPuzzle(0);
+        var client = new PuzzleClient();
+        
+        WriteLine("Loading maze...");
 
+        var response = client.GetPuzzle(Difficulty.Small, DateOnly.FromDateTime(DateTime.Now.Date));
+
+        if (response == null)
+        {
+            WriteLine("No puzzle found.");
+            
+            return;
+        }
+
+        _maze = response.Value.Maze;
+            
         var result = new Solver(_maze).Solve();
 
         _path = result.Path.ToHashSet();
