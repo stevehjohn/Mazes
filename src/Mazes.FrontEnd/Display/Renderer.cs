@@ -35,6 +35,8 @@ public class Renderer : Game
 
     protected override void LoadContent()
     {
+        Window.Title = "Mazes";
+        
         var client = new PuzzleClient();
         
         WriteLine("Loading maze...");
