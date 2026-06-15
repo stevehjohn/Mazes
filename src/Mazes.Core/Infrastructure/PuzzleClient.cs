@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using HtmlAgilityPack;
+using Mazes.Core.Extensions;
 using Mazes.Core.Models;
 
 namespace Mazes.Core.Infrastructure;
@@ -63,7 +64,7 @@ public sealed class PuzzleClient : IDisposable
 
         var day = date.Day;
 
-        using var response = _client.GetAsync($"maze/{difficulty}/{year}/{month}/{day}").Result;
+        using var response = _client.GetAsync($"maze/{difficulty.ToUrlString()}/{year}/{month}/{day}").Result;
 
         var page = response.Content.ReadAsStringAsync().Result;
 

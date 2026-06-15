@@ -11,7 +11,6 @@ public enum Difficulty
     Small,
     Medium,
     Large,
-    [JsonStringEnumMemberName("xlarge")]
     ExtraLarge,
     Mixed
 }
