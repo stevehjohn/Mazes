@@ -106,8 +106,6 @@ public class Renderer : Game
         {
             for (var x = 0; x < _maze.Width; x++)
             {
-                var p = (x, y);
-
                 if (_maze[x, y])
                 {
                     DrawTile(x, y, Constants.WallColour, 0);
@@ -152,7 +150,7 @@ public class Renderer : Game
             {
                 for (var dx = -thickness; dx <= thickness; dx++)
                 {
-                    _data[(x1 + dx) + y * pixelWidth] = colour;
+                    _data[x1 + dx + y * pixelWidth] = colour;
                 }
             }
         }
