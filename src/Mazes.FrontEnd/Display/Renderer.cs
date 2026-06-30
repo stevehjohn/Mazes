@@ -103,29 +103,34 @@ public class Renderer : Game
         Array.Fill(_data, Constants.BackgroundColour);
 
         for (var y = 0; y < _maze.Height; y++)
-        for (var x = 0; x < _maze.Width; x++)
         {
-            var p = (x, y);
-
-            if (_maze[x, y])
+            for (var x = 0; x < _maze.Width; x++)
             {
-                DrawTile(x, y, Constants.WallColour, 0);
+                var p = (x, y);
 
-                continue;
-            }
+                if (_maze[x, y])
+                {
+                    DrawTile(x, y, Constants.WallColour, 0);
 
-            if (_path.Contains(p)) DrawPathDot(x, y, Constants.PathColour);
+                    continue;
+                }
 
-            if (p == (_maze.Start.X, _maze.Start.Y))
-            {
-                DrawPathDot(x, y, Constants.StartColour);
+                if (_path.Contains(p))
+                {
+                    DrawPathDot(x, y, Constants.PathColour);
+                }
 
-                continue;
-            }
+                if (p == (_maze.Start.X, _maze.Start.Y))
+                {
+                    DrawPathDot(x, y, Constants.StartColour);
 
-            if (p == (_maze.End.X, _maze.End.Y))
-            {
-                DrawPathDot(x, y, Constants.FinishColour);
+                    continue;
+                }
+
+                if (p == (_maze.End.X, _maze.End.Y))
+                {
+                    DrawPathDot(x, y, Constants.FinishColour);
+                }
             }
         }
 
