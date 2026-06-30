@@ -10,6 +10,8 @@ public static class Constants
 
     public const int BorderSize = 10;
 
+    public const int DotRadius = 3;
+
     public static Color BackgroundColour { get; } = Color.Black;
 
     public static Color WallColour { get; } = new(0xE0, 0xE0, 0xE0, 0xFF);

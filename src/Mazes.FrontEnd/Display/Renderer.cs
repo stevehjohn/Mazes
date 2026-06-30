@@ -192,17 +192,15 @@ public class Renderer : Game
 
         var centreY = (startY + endY) / 2;
 
-        const int radius = 3;
-
-        for (var y = centreY - radius; y <= centreY + radius; y++)
+        for (var y = centreY - Constants.DotRadius; y <= centreY + Constants.DotRadius; y++)
         {
-            for (var x = centreX - radius; x <= centreX + radius; x++)
+            for (var x = centreX - Constants.DotRadius; x <= centreX + Constants.DotRadius; x++)
             {
                 var dx = x - centreX;
 
                 var dy = y - centreY;
 
-                if (dx * dx + dy * dy <= radius * radius)
+                if (dx * dx + dy * dy <= Constants.DotRadius * Constants.DotRadius)
                 {
                     _data[x + y * pixelWidth] = color;
                 }
