@@ -24,7 +24,11 @@ public class Renderer : Game
 
     private Maze _maze;
 
-    private HashSet<(int X, int Y)> _path = [];
+    private List<(int X, int Y)> _path = [];
+
+    private int _pathSegmentIndex;
+
+    private float _pathSegmentProgress;
 
     public Renderer()
     {
@@ -60,7 +64,7 @@ public class Renderer : Game
 
         WriteLine(@$"Solved in {sw.Elapsed:ss\.fff}.");
 
-        _path = result.Path.ToHashSet();
+        _path = result.Path.ToList();
 
         var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
 
@@ -81,6 +85,13 @@ public class Renderer : Game
         base.LoadContent();
     }
 
+    protected override void Update(GameTime gameTime)
+    {
+        UpdateSolutionAnimation(gameTime);
+
+        base.Update(gameTime);
+    }
+
     protected override void Draw(GameTime gameTime)
     {
         DrawIntoData();
@@ -96,6 +107,25 @@ public class Renderer : Game
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    private void UpdateSolutionAnimation(GameTime gameTime)
+    {
+        if (_pathSegmentIndex >= _path.Count - 1)
+        {
+            return;
+        }
+
+        var elapsedSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        _pathSegmentProgress += elapsedSeconds * Constants.PathAnimationStepsPerSecond;
+
+        while (_pathSegmentProgress >= 1f && _pathSegmentIndex < _path.Count - 1)
+        {
+            _pathSegmentProgress -= 1f;
+
+            _pathSegmentIndex++;
+        }
     }
 
     private void DrawIntoData()
@@ -114,7 +144,7 @@ public class Renderer : Game
         }
 
         DrawSolutionLine();
-        
+
         DrawPathDot(_maze.Start.X, _maze.Start.Y, Constants.StartColour);
 
         DrawPathDot(_maze.End.X, _maze.End.Y, Constants.FinishColour);
@@ -122,12 +152,37 @@ public class Renderer : Game
 
     private void DrawSolutionLine()
     {
-        var ordered = _path.OrderBy(_ => 0).ToList();
-
-        for (var i = 0; i < ordered.Count - 1; i++)
+        if (_path.Count < 2)
         {
-            DrawLine(ordered[i], ordered[i + 1], Constants.PathColour);
+            return;
         }
+
+        for (var i = 0; i < _pathSegmentIndex; i++)
+        {
+            DrawLine(_path[i], _path[i + 1], Constants.PathColour);
+        }
+
+        if (_pathSegmentIndex < _path.Count - 1)
+        {
+            DrawPartialLine(_path[_pathSegmentIndex], _path[_pathSegmentIndex + 1], _pathSegmentProgress, Constants.PathColour);
+        }
+    }
+
+    private void DrawPartialLine((int X, int Y) from, (int X, int Y) to, float progress, Color colour)
+    {
+        var x1 = GetCentre(from.X);
+
+        var y1 = GetCentre(from.Y);
+
+        var x2 = GetCentre(to.X);
+
+        var y2 = GetCentre(to.Y);
+
+        var currentX = (int)MathHelper.Lerp(x1, x2, progress);
+
+        var currentY = (int)MathHelper.Lerp(y1, y2, progress);
+
+        DrawLine(x1, y1, currentX, currentY, colour);
     }
 
     private void DrawLine((int X, int Y) from, (int X, int Y) to, Color colour)
@@ -140,6 +195,11 @@ public class Renderer : Game
 
         var y2 = GetCentre(to.Y);
 
+        DrawLine(x1, y1, x2, y2, colour);
+    }
+
+    private void DrawLine(int x1, int y1, int x2, int y2, Color colour)
+    {
         var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
 
         var thickness = Math.Max(1, Constants.LineThickness);
@@ -210,7 +270,10 @@ public class Renderer : Game
 
     private void DrawPathDot(int mazeX, int mazeY, Color color)
     {
-        if (IsMazeBorder(mazeX, mazeY)) return;
+        if (IsMazeBorder(mazeX, mazeY))
+        {
+            return;
+        }
 
         var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
 
@@ -234,7 +297,10 @@ public class Renderer : Game
 
                 var dy = y - centreY;
 
-                if (dx * dx + dy * dy <= Constants.DotRadius * Constants.DotRadius) _data[x + y * pixelWidth] = color;
+                if (dx * dx + dy * dy <= Constants.DotRadius * Constants.DotRadius)
+                {
+                    _data[x + y * pixelWidth] = color;
+                }
             }
         }
     }
