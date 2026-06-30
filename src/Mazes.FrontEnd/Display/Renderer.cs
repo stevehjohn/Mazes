@@ -114,6 +114,8 @@ public class Renderer : Game
                 if (_maze[mazeX, mazeY])
                 {
                     DrawTile(mazeX, mazeY, Constants.WallColour, 0);
+                    
+                    continue;
                 }
 
                 if (position == (_maze.Start.X, _maze.Start.Y))
