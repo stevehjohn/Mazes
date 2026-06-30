@@ -111,8 +111,6 @@ public class Renderer : Game
                 if (_maze[x, y])
                 {
                     DrawTile(x, y, Constants.WallColour, 0);
-
-                    continue;
                 }
             }
         }
