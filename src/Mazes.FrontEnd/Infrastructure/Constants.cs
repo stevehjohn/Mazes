@@ -10,7 +10,7 @@ public static class Constants
 
     public const int BorderSize = 10;
 
-    public const int DotRadius = 3;
+    public const int LineThickness = 1;
 
     public static Color BackgroundColour { get; } = Color.Black;
 
