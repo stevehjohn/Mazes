@@ -183,6 +183,8 @@ public class Renderer : Game
         var currentY = (int) MathHelper.Lerp(y1, y2, progress);
 
         DrawLine(x1, y1, currentX, currentY, colour);
+
+        DrawPathDotAtPixel(currentX, currentY, Constants.BotColour);
     }
 
     private void DrawLine((int X, int Y) from, (int X, int Y) to, Color colour)
@@ -288,6 +290,26 @@ public class Renderer : Game
         var centreX = (startX + endX) / 2;
 
         var centreY = (startY + endY) / 2;
+
+        for (var y = centreY - Constants.DotRadius; y <= centreY + Constants.DotRadius; y++)
+        {
+            for (var x = centreX - Constants.DotRadius; x <= centreX + Constants.DotRadius; x++)
+            {
+                var dx = x - centreX;
+
+                var dy = y - centreY;
+
+                if (dx * dx + dy * dy <= Constants.DotRadius * Constants.DotRadius)
+                {
+                    _data[x + y * pixelWidth] = color;
+                }
+            }
+        }
+    }
+
+    private void DrawPathDotAtPixel(int centreX, int centreY, Color color)
+    {
+        var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
 
         for (var y = centreY - Constants.DotRadius; y <= centreY + Constants.DotRadius; y++)
         {

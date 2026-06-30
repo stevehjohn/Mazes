@@ -25,4 +25,6 @@ public static class Constants
     public static Color StartColour { get; } = Color.Lime;
 
     public static Color FinishColour { get; } = Color.Fuchsia;
+    
+    public static Color BotColour { get; } = Color.Cyan;
 }
