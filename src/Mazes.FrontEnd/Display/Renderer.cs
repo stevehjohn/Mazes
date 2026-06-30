@@ -100,32 +100,32 @@ public class Renderer : Game
     private void DrawSolutionLine()
     {
         var ordered = _path.OrderBy(p => 0).ToList();
-        for (int i = 0; i < ordered.Count - 1; i++) DrawLine(ordered[i], ordered[i + 1], Constants.PathColour);
+        for (var i = 0; i < ordered.Count - 1; i++) DrawLine(ordered[i], ordered[i + 1], Constants.PathColour);
     }
 
     private void DrawLine((int X, int Y) from, (int X, int Y) to, Color colour)
     {
         var x1 = GetCentre(from.X);
-        var y1 = GetCentre(from.Y, false);
+        var y1 = GetCentre(from.Y);
         var x2 = GetCentre(to.X);
-        var y2 = GetCentre(to.Y, false);
+        var y2 = GetCentre(to.Y);
         var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
-        int thickness = Math.Max(1, Constants.LineThickness);
+        var thickness = Math.Max(1, Constants.LineThickness);
         if (x1 == x2)
         {
-            for (int y = Math.Min(y1, y2); y <= Math.Max(y1, y2); y++)
-            for (int dx = -thickness; dx <= thickness; dx++)
+            for (var y = Math.Min(y1, y2); y <= Math.Max(y1, y2); y++)
+            for (var dx = -thickness; dx <= thickness; dx++)
                 _data[(x1 + dx) + y * pixelWidth] = colour;
         }
         else if (y1 == y2)
         {
-            for (int x = Math.Min(x1, x2); x <= Math.Max(x1, x2); x++)
-            for (int dy = -thickness; dy <= thickness; dy++)
+            for (var x = Math.Min(x1, x2); x <= Math.Max(x1, x2); x++)
+            for (var dy = -thickness; dy <= thickness; dy++)
                 _data[x + (y1 + dy) * pixelWidth] = colour;
         }
     }
 
-    private int GetCentre(int mazeCoord, bool x = true)
+    private static int GetCentre(int mazeCoord)
     {
         var s = GetPixelStart(mazeCoord) + Constants.BorderSize;
         var e = GetPixelStart(mazeCoord + 1) + Constants.BorderSize;
