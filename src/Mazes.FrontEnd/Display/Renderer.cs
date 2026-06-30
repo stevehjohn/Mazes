@@ -103,7 +103,7 @@ public class Renderer : Game
 
     private void DrawIntoData()
     {
-        Array.Fill(_data, Color.Black);
+        Array.Fill(_data, Constants.BackgroundColour);
 
         for (var mazeY = 0; mazeY < _maze.Height; mazeY++)
         {
@@ -113,28 +113,28 @@ public class Renderer : Game
 
                 if (_maze[mazeX, mazeY])
                 {
-                    DrawTile(mazeX, mazeY, new Color(64, 64, 64), 0);
+                    DrawTile(mazeX, mazeY, Constants.WallColour, 0);
 
                     continue;
                 }
 
                 if (position == (_maze.Start.X, _maze.Start.Y))
                 {
-                    DrawTile(mazeX, mazeY, Constants.StartColor, 2);
+                    DrawTile(mazeX, mazeY, Constants.StartColour, 2);
 
                     continue;
                 }
 
                 if (position == (_maze.End.X, _maze.End.Y))
                 {
-                    DrawTile(mazeX, mazeY, Constants.FinishColor, 2);
+                    DrawTile(mazeX, mazeY, Constants.FinishColour, 2);
 
                     continue;
                 }
 
                 if (_path.Contains(position))
                 {
-                    DrawTile(mazeX, mazeY, Constants.PathColor, borderSize: 2);
+                    DrawTile(mazeX, mazeY, Constants.PathColour, borderSize: 2);
                 }
             }
         }

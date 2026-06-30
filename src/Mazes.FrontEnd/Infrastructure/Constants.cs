@@ -6,9 +6,13 @@ public static class Constants
 {
     public const int TileSize = 14;
 
-    public static Color PathColor { get; } = new(0xFF, 0xB0, 0x00, 0xFF);
+    public static Color BackgroundColour { get; } = Color.Black;
 
-    public static Color StartColor { get; } = Color.Lime;
+    public static Color WallColour { get; } = new(64, 64, 64);
 
-    public static Color FinishColor { get; } = Color.Fuchsia;
+    public static Color PathColour { get; } = new(0xFF, 0xB0, 0x00, 0xFF);
+
+    public static Color StartColour { get; } = Color.Lime;
+
+    public static Color FinishColour { get; } = Color.Fuchsia;
 }
