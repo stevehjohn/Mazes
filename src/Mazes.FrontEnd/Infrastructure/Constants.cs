@@ -8,6 +8,8 @@ public static class Constants
 
     public const int WallSize = 1;
 
+    public const int BorderSize = 10;
+
     public static Color BackgroundColour { get; } = Color.Black;
 
     public static Color WallColour { get; } = new(0xE0, 0xE0, 0xE0, 0xFF);

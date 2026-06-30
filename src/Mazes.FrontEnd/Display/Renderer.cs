@@ -65,9 +65,9 @@ public class Renderer : Game
             
         _path = result.Path.ToHashSet();
         
-        var pixelWidth = GetPixelSize(_maze.Width);
+        var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
 
-        var pixelHeight = GetPixelSize(_maze.Height);
+        var pixelHeight = GetPixelSize(_maze.Height) + Constants.BorderSize * 2;
 
         _graphics.PreferredBackBufferWidth = pixelWidth;
 
@@ -134,7 +134,7 @@ public class Renderer : Game
 
                 if (_path.Contains(position))
                 {
-                    DrawTile(mazeX, mazeY, Constants.PathColour, borderSize: 2);
+                    //DrawTile(mazeX, mazeY, Constants.PathColour, borderSize: 2);
                 }
             }
         }
@@ -142,15 +142,15 @@ public class Renderer : Game
 
     private void DrawTile(int mazeX, int mazeY, Color color, int borderSize)
     {
-        var pixelWidth = GetPixelSize(_maze.Width);
-
-        var startX = GetPixelStart(mazeX);
+        var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
         
-        var startY = GetPixelStart(mazeY);
-
-        var endX = GetPixelStart(mazeX + 1);
+        var startX = GetPixelStart(mazeX) + Constants.BorderSize;
         
-        var endY = GetPixelStart(mazeY + 1);
+        var startY = GetPixelStart(mazeY) + Constants.BorderSize;
+
+        var endX = GetPixelStart(mazeX + 1) + Constants.BorderSize;
+        
+        var endY = GetPixelStart(mazeY + 1) + Constants.BorderSize;
 
         var xBorder = Math.Min(borderSize, (endX - startX - 1) / 2);
 
