@@ -12,9 +12,11 @@ public static class Constants
 
     public const int LineThickness = 1;
 
+    public const int DotRadius = 5;
+
     public static Color BackgroundColour { get; } = Color.Black;
 
-    public static Color WallColour { get; } = Color.Lime;
+    public static Color WallColour { get; } = Color.White;
 
     public static Color PathColour { get; } = new(0xFF, 0xB0, 0x00, 0xFF);
 

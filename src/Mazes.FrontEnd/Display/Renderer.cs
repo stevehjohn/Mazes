@@ -114,27 +114,14 @@ public class Renderer : Game
 
                     continue;
                 }
-
-                if (_path.Contains(p))
-                {
-                    DrawPathDot(x, y, Constants.PathColour);
-                }
-
-                if (p == (_maze.Start.X, _maze.Start.Y))
-                {
-                    DrawPathDot(x, y, Constants.StartColour);
-
-                    continue;
-                }
-
-                if (p == (_maze.End.X, _maze.End.Y))
-                {
-                    DrawPathDot(x, y, Constants.FinishColour);
-                }
             }
         }
 
         DrawSolutionLine();
+        
+        DrawPathDot(_maze.Start.X, _maze.Start.Y, Constants.StartColour);
+
+        DrawPathDot(_maze.End.X, _maze.End.Y, Constants.FinishColour);
     }
 
     private void DrawSolutionLine()
@@ -243,15 +230,15 @@ public class Renderer : Game
 
         var centreY = (startY + endY) / 2;
 
-        for (var y = centreY - Constants.LineThickness; y <= centreY + Constants.LineThickness; y++)
+        for (var y = centreY - Constants.DotRadius; y <= centreY + Constants.DotRadius; y++)
         {
-            for (var x = centreX - Constants.LineThickness; x <= centreX + Constants.LineThickness; x++)
+            for (var x = centreX - Constants.DotRadius; x <= centreX + Constants.DotRadius; x++)
             {
                 var dx = x - centreX;
 
                 var dy = y - centreY;
 
-                if (dx * dx + dy * dy <= Constants.LineThickness * Constants.LineThickness) _data[x + y * pixelWidth] = color;
+                if (dx * dx + dy * dy <= Constants.DotRadius * Constants.DotRadius) _data[x + y * pixelWidth] = color;
             }
         }
     }
