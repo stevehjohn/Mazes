@@ -24,7 +24,7 @@ public class Renderer : Game
     private SpriteBatch _spriteBatch;
 
     private Maze _maze;
-    
+
     private HashSet<(int X, int Y)> _path = [];
 
     public Renderer()
@@ -37,11 +37,11 @@ public class Renderer : Game
     protected override void LoadContent()
     {
         Window.Title = "Mazes";
-        
+
         IsMouseVisible = true;
-        
+
         var client = new PuzzleClient();
-        
+
         WriteLine("Loading maze...");
 
         var response = client.GetPuzzle(Difficulty.Small, DateOnly.FromDateTime(DateTime.Now.Date));
@@ -49,22 +49,22 @@ public class Renderer : Game
         if (response == null)
         {
             WriteLine("No puzzle found.");
-            
+
             return;
         }
 
         _maze = response.Value.Maze;
 
         var stopwatch = Stopwatch.StartNew();
-            
+
         var result = new Solver(_maze).Solve();
-        
+
         stopwatch.Stop();
 
         WriteLine(@$"Solved in {stopwatch.Elapsed:ss\.fff}.");
-            
+
         _path = result.Path.ToHashSet();
-        
+
         var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
 
         var pixelHeight = GetPixelSize(_maze.Height) + Constants.BorderSize * 2;
@@ -114,27 +114,25 @@ public class Renderer : Game
                 if (_maze[mazeX, mazeY])
                 {
                     DrawTile(mazeX, mazeY, Constants.WallColour, 0);
-
-                    continue;
                 }
 
                 if (position == (_maze.Start.X, _maze.Start.Y))
                 {
-                    DrawTile(mazeX, mazeY, Constants.StartColour, 2);
+                    DrawPathDot(mazeX, mazeY, Constants.StartColour);
 
                     continue;
                 }
 
                 if (position == (_maze.End.X, _maze.End.Y))
                 {
-                    DrawTile(mazeX, mazeY, Constants.FinishColour, 2);
+                    DrawPathDot(mazeX, mazeY, Constants.FinishColour);
 
                     continue;
                 }
 
                 if (_path.Contains(position))
                 {
-                    //DrawTile(mazeX, mazeY, Constants.PathColour, borderSize: 2);
+                    DrawPathDot(mazeX, mazeY, Constants.PathColour);
                 }
             }
         }
@@ -143,13 +141,13 @@ public class Renderer : Game
     private void DrawTile(int mazeX, int mazeY, Color color, int borderSize)
     {
         var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
-        
+
         var startX = GetPixelStart(mazeX) + Constants.BorderSize;
-        
+
         var startY = GetPixelStart(mazeY) + Constants.BorderSize;
 
         var endX = GetPixelStart(mazeX + 1) + Constants.BorderSize;
-        
+
         var endY = GetPixelStart(mazeY + 1) + Constants.BorderSize;
 
         var xBorder = Math.Min(borderSize, (endX - startX - 1) / 2);
@@ -171,6 +169,53 @@ public class Renderer : Game
                 _data[x + y * pixelWidth] = color;
             }
         }
+    }
+
+    private void DrawPathDot(int mazeX, int mazeY, Color color)
+    {
+        if (IsMazeBorder(mazeX, mazeY))
+        {
+            return;
+        }
+
+        var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
+
+        var startX = GetPixelStart(mazeX) + Constants.BorderSize;
+
+        var startY = GetPixelStart(mazeY) + Constants.BorderSize;
+
+        var endX = GetPixelStart(mazeX + 1) + Constants.BorderSize;
+
+        var endY = GetPixelStart(mazeY + 1) + Constants.BorderSize;
+
+        var centreX = (startX + endX) / 2;
+
+        var centreY = (startY + endY) / 2;
+
+        const int radius = 2;
+
+        for (var y = centreY - radius; y <= centreY + radius; y++)
+        {
+            for (var x = centreX - radius; x <= centreX + radius; x++)
+            {
+                var dx = x - centreX;
+
+                var dy = y - centreY;
+
+                if (dx * dx + dy * dy <= radius * radius)
+                {
+                    _data[x + y * pixelWidth] = color;
+                }
+            }
+        }
+    }
+
+    private bool IsMazeBorder(int mazeX, int mazeY)
+    {
+        return mazeX == 0 ||
+               mazeY == 0 ||
+               mazeX == _maze.Right ||
+               mazeY == _maze.Bottom;
     }
 
     private static int GetPixelSize(int mazeSize)
