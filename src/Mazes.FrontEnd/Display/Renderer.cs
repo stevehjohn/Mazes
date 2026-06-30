@@ -65,9 +65,9 @@ public class Renderer : Game
             
         _path = result.Path.ToHashSet();
         
-        var pixelWidth = _maze.Width * Constants.TileSize;
+        var pixelWidth = GetPixelSize(_maze.Width);
 
-        var pixelHeight = _maze.Height * Constants.TileSize;
+        var pixelHeight = GetPixelSize(_maze.Height);
 
         _graphics.PreferredBackBufferWidth = pixelWidth;
 
@@ -142,15 +142,15 @@ public class Renderer : Game
 
     private void DrawTile(int mazeX, int mazeY, Color color, int borderSize)
     {
-        var pixelWidth = _maze.Width * Constants.TileSize;
+        var pixelWidth = GetPixelSize(_maze.Width);
 
-        var startX = mazeX * Constants.TileSize + borderSize;
+        var startX = GetPixelStart(mazeX) + borderSize;
         
-        var startY = mazeY * Constants.TileSize + borderSize;
+        var startY = GetPixelStart(mazeY) + borderSize;
 
-        var endX = (mazeX + 1) * Constants.TileSize - borderSize;
+        var endX = GetPixelStart(mazeX + 1) - borderSize;
         
-        var endY = (mazeY + 1) * Constants.TileSize - borderSize;
+        var endY = GetPixelStart(mazeY + 1) - borderSize;
 
         for (var y = startY; y < endY; y++)
         {
@@ -159,5 +159,23 @@ public class Renderer : Game
                 _data[x + y * pixelWidth] = color;
             }
         }
+    }
+
+    private static int GetPixelSize(int mazeSize)
+    {
+        var pathCount = mazeSize / 2;
+
+        var wallCount = mazeSize - pathCount;
+
+        return pathCount * Constants.PathSize + wallCount * Constants.WallSize;
+    }
+
+    private static int GetPixelStart(int mazeCoordinate)
+    {
+        var pathCount = mazeCoordinate / 2;
+
+        var wallCount = mazeCoordinate - pathCount;
+
+        return pathCount * Constants.PathSize + wallCount * Constants.WallSize;
     }
 }
