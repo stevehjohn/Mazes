@@ -116,7 +116,7 @@ public class Renderer : Game
             return;
         }
 
-        var elapsedSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        var elapsedSeconds = (float) gameTime.ElapsedGameTime.TotalSeconds;
 
         _pathSegmentProgress += elapsedSeconds * Constants.PathAnimationStepsPerSecond;
 
@@ -178,9 +178,9 @@ public class Renderer : Game
 
         var y2 = GetCentre(to.Y);
 
-        var currentX = (int)MathHelper.Lerp(x1, x2, progress);
+        var currentX = (int) MathHelper.Lerp(x1, x2, progress);
 
-        var currentY = (int)MathHelper.Lerp(y1, y2, progress);
+        var currentY = (int) MathHelper.Lerp(y1, y2, progress);
 
         DrawLine(x1, y1, currentX, currentY, colour);
     }
