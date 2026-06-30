@@ -14,6 +14,8 @@ public static class Constants
 
     public const int DotRadius = 5;
 
+    public const float PathAnimationStepsPerSecond = 20f;
+
     public static Color BackgroundColour { get; } = Color.Black;
 
     public static Color WallColour { get; } = Color.White;
