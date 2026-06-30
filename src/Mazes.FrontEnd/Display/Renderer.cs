@@ -14,6 +14,8 @@ namespace Mazes.FrontEnd.Display;
 
 public class Renderer : Game
 {
+    private const int StartDelayMilliseconds = 2_000;
+    
     private readonly GraphicsDeviceManager _graphics;
 
     private Texture2D _texture;
@@ -29,6 +31,8 @@ public class Renderer : Game
     private int _pathSegmentIndex;
 
     private float _pathSegmentProgress;
+    
+    private Stopwatch _stopwatch = new();
 
     public Renderer()
     {
@@ -45,7 +49,7 @@ public class Renderer : Game
 
         WriteLine("Loading maze...");
 
-        var response = client.GetPuzzle(Difficulty.Small, DateOnly.FromDateTime(DateTime.Now.Date));
+        var response = client.GetPuzzle(Difficulty.Medium, DateOnly.FromDateTime(DateTime.Now.Date));
 
         if (response == null)
         {
@@ -61,6 +65,8 @@ public class Renderer : Game
         var result = new Solver(_maze).Solve();
 
         sw.Stop();
+        
+        _stopwatch.Start();
 
         WriteLine(@$"Solved in {sw.Elapsed:ss\.fff}.");
 
@@ -114,6 +120,18 @@ public class Renderer : Game
         if (_pathSegmentIndex >= _path.Count - 1)
         {
             return;
+        }
+
+        if (_stopwatch?.Elapsed.TotalMilliseconds < StartDelayMilliseconds)
+        {
+            return;
+        }
+
+        if (_stopwatch != null)
+        {
+            _stopwatch.Stop();
+            
+            _stopwatch =  null;
         }
 
         var elapsedSeconds = (float) gameTime.ElapsedGameTime.TotalSeconds;
