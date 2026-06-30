@@ -4,11 +4,17 @@ namespace Mazes.FrontEnd.Infrastructure;
 
 public static class Constants
 {
-    public const int TileSize = 14;
+    public const int PathSize = 15;
+
+    public const int WallSize = 1;
+
+    public const int BorderSize = 10;
+
+    public const int DotRadius = 3;
 
     public static Color BackgroundColour { get; } = Color.Black;
 
-    public static Color WallColour { get; } = new(64, 64, 64);
+    public static Color WallColour { get; } = new(0xE0, 0xE0, 0xE0, 0xFF);
 
     public static Color PathColour { get; } = new(0xFF, 0xB0, 0x00, 0xFF);
 
