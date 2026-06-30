@@ -180,9 +180,9 @@ public class Renderer : Game
 
         var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
 
-        var startX = GetPixelStart(mazeX) + Constants.BorderSize;
+        var startX = GetPixelStart(mazeX) + Constants.BorderSize - 1;
 
-        var startY = GetPixelStart(mazeY) + Constants.BorderSize;
+        var startY = GetPixelStart(mazeY) + Constants.BorderSize - 1;
 
         var endX = GetPixelStart(mazeX + 1) + Constants.BorderSize;
 
@@ -192,7 +192,7 @@ public class Renderer : Game
 
         var centreY = (startY + endY) / 2;
 
-        const int radius = 2;
+        const int radius = 3;
 
         for (var y = centreY - radius; y <= centreY + radius; y++)
         {

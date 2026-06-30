@@ -4,7 +4,7 @@ namespace Mazes.FrontEnd.Infrastructure;
 
 public static class Constants
 {
-    public const int PathSize = 14;
+    public const int PathSize = 15;
 
     public const int WallSize = 1;
 
