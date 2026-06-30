@@ -144,13 +144,25 @@ public class Renderer : Game
     {
         var pixelWidth = GetPixelSize(_maze.Width);
 
-        var startX = GetPixelStart(mazeX) + borderSize;
+        var startX = GetPixelStart(mazeX);
         
-        var startY = GetPixelStart(mazeY) + borderSize;
+        var startY = GetPixelStart(mazeY);
 
-        var endX = GetPixelStart(mazeX + 1) - borderSize;
+        var endX = GetPixelStart(mazeX + 1);
         
-        var endY = GetPixelStart(mazeY + 1) - borderSize;
+        var endY = GetPixelStart(mazeY + 1);
+
+        var xBorder = Math.Min(borderSize, (endX - startX - 1) / 2);
+
+        var yBorder = Math.Min(borderSize, (endY - startY - 1) / 2);
+
+        startX += xBorder;
+
+        startY += yBorder;
+
+        endX -= xBorder;
+
+        endY -= yBorder;
 
         for (var y = startY; y < endY; y++)
         {
