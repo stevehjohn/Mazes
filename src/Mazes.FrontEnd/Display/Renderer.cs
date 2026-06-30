@@ -44,7 +44,7 @@ public class Renderer : Game
         
         WriteLine("Loading maze...");
 
-        var response = client.GetPuzzle(Difficulty.ExtraLarge, DateOnly.FromDateTime(DateTime.Now.Date));
+        var response = client.GetPuzzle(Difficulty.Small, DateOnly.FromDateTime(DateTime.Now.Date));
 
         if (response == null)
         {
@@ -120,21 +120,21 @@ public class Renderer : Game
 
                 if (position == (_maze.Start.X, _maze.Start.Y))
                 {
-                    DrawTile(mazeX, mazeY, Color.Lime, 2);
+                    DrawTile(mazeX, mazeY, Constants.StartColor, 2);
 
                     continue;
                 }
 
                 if (position == (_maze.End.X, _maze.End.Y))
                 {
-                    DrawTile(mazeX, mazeY, Color.Fuchsia, 2);
+                    DrawTile(mazeX, mazeY, Constants.FinishColor, 2);
 
                     continue;
                 }
 
                 if (_path.Contains(position))
                 {
-                    DrawTile(mazeX, mazeY, Color.Green, borderSize: 2);
+                    DrawTile(mazeX, mazeY, Constants.PathColor, borderSize: 2);
                 }
             }
         }
