@@ -14,7 +14,6 @@ namespace Mazes.FrontEnd.Display;
 
 public class Renderer : Game
 {
-    // ReSharper disable once NotAccessedField.Local
     private readonly GraphicsDeviceManager _graphics;
 
     private Texture2D _texture;
@@ -30,8 +29,6 @@ public class Renderer : Game
     public Renderer()
     {
         _graphics = new GraphicsDeviceManager(this);
-
-        PuzzleManager.Path = "Data/Puzzles.json";
     }
 
     protected override void LoadContent()
@@ -55,13 +52,13 @@ public class Renderer : Game
 
         _maze = response.Value.Maze;
 
-        var stopwatch = Stopwatch.StartNew();
+        var sw = Stopwatch.StartNew();
 
         var result = new Solver(_maze).Solve();
 
-        stopwatch.Stop();
+        sw.Stop();
 
-        WriteLine(@$"Solved in {stopwatch.Elapsed:ss\.fff}.");
+        WriteLine(@$"Solved in {sw.Elapsed:ss\.fff}.");
 
         _path = result.Path.ToHashSet();
 
@@ -105,39 +102,77 @@ public class Renderer : Game
     {
         Array.Fill(_data, Constants.BackgroundColour);
 
-        for (var mazeY = 0; mazeY < _maze.Height; mazeY++)
+        for (var y = 0; y < _maze.Height; y++)
         {
-            for (var mazeX = 0; mazeX < _maze.Width; mazeX++)
+            for (var x = 0; x < _maze.Width; x++)
             {
-                var position = (mazeX, mazeY);
-
-                if (_maze[mazeX, mazeY])
+                if (_maze[x, y])
                 {
-                    DrawTile(mazeX, mazeY, Constants.WallColour, 0);
-                    
-                    continue;
-                }
-
-                if (position == (_maze.Start.X, _maze.Start.Y))
-                {
-                    DrawPathDot(mazeX, mazeY, Constants.StartColour);
-
-                    continue;
-                }
-
-                if (position == (_maze.End.X, _maze.End.Y))
-                {
-                    DrawPathDot(mazeX, mazeY, Constants.FinishColour);
-
-                    continue;
-                }
-
-                if (_path.Contains(position))
-                {
-                    DrawPathDot(mazeX, mazeY, Constants.PathColour);
+                    DrawTile(x, y, Constants.WallColour, 0);
                 }
             }
         }
+
+        DrawSolutionLine();
+        
+        DrawPathDot(_maze.Start.X, _maze.Start.Y, Constants.StartColour);
+
+        DrawPathDot(_maze.End.X, _maze.End.Y, Constants.FinishColour);
+    }
+
+    private void DrawSolutionLine()
+    {
+        var ordered = _path.OrderBy(_ => 0).ToList();
+
+        for (var i = 0; i < ordered.Count - 1; i++)
+        {
+            DrawLine(ordered[i], ordered[i + 1], Constants.PathColour);
+        }
+    }
+
+    private void DrawLine((int X, int Y) from, (int X, int Y) to, Color colour)
+    {
+        var x1 = GetCentre(from.X);
+
+        var y1 = GetCentre(from.Y);
+
+        var x2 = GetCentre(to.X);
+
+        var y2 = GetCentre(to.Y);
+
+        var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
+
+        var thickness = Math.Max(1, Constants.LineThickness);
+
+        if (x1 == x2)
+        {
+            for (var y = Math.Min(y1, y2); y <= Math.Max(y1, y2); y++)
+            {
+                for (var dx = -thickness; dx <= thickness; dx++)
+                {
+                    _data[x1 + dx + y * pixelWidth] = colour;
+                }
+            }
+        }
+        else if (y1 == y2)
+        {
+            for (var x = Math.Min(x1, x2); x <= Math.Max(x1, x2); x++)
+            {
+                for (var dy = -thickness; dy <= thickness; dy++)
+                {
+                    _data[x + (y1 + dy) * pixelWidth] = colour;
+                }
+            }
+        }
+    }
+
+    private static int GetCentre(int mazeCoord)
+    {
+        var s = GetPixelStart(mazeCoord) + Constants.BorderSize;
+
+        var e = GetPixelStart(mazeCoord + 1) + Constants.BorderSize;
+
+        return (s + e) / 2;
     }
 
     private void DrawTile(int mazeX, int mazeY, Color color, int borderSize)
@@ -175,10 +210,7 @@ public class Renderer : Game
 
     private void DrawPathDot(int mazeX, int mazeY, Color color)
     {
-        if (IsMazeBorder(mazeX, mazeY))
-        {
-            return;
-        }
+        if (IsMazeBorder(mazeX, mazeY)) return;
 
         var pixelWidth = GetPixelSize(_maze.Width) + Constants.BorderSize * 2;
 
@@ -202,21 +234,12 @@ public class Renderer : Game
 
                 var dy = y - centreY;
 
-                if (dx * dx + dy * dy <= Constants.DotRadius * Constants.DotRadius)
-                {
-                    _data[x + y * pixelWidth] = color;
-                }
+                if (dx * dx + dy * dy <= Constants.DotRadius * Constants.DotRadius) _data[x + y * pixelWidth] = color;
             }
         }
     }
 
-    private bool IsMazeBorder(int mazeX, int mazeY)
-    {
-        return mazeX == 0 ||
-               mazeY == 0 ||
-               mazeX == _maze.Right ||
-               mazeY == _maze.Bottom;
-    }
+    private bool IsMazeBorder(int x, int y) => x == 0 || y == 0 || x == _maze.Right || y == _maze.Bottom;
 
     private static int GetPixelSize(int mazeSize)
     {
