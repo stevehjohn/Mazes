@@ -34,7 +34,7 @@ public class Renderer : Game
     
     private Stopwatch _stopwatch = new();
 
-    private Difficulty _difficulty;
+    private readonly Difficulty _difficulty;
 
     public Renderer(Difficulty difficulty)
     {
