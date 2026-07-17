@@ -34,9 +34,13 @@ public class Renderer : Game
     
     private Stopwatch _stopwatch = new();
 
-    public Renderer()
+    private Difficulty _difficulty;
+
+    public Renderer(Difficulty difficulty)
     {
         _graphics = new GraphicsDeviceManager(this);
+        
+        _difficulty = difficulty;
     }
 
     protected override void LoadContent()
@@ -49,7 +53,7 @@ public class Renderer : Game
 
         WriteLine("Loading maze...");
 
-        var response = client.GetPuzzle(Difficulty.Small, DateOnly.FromDateTime(DateTime.Now.Date));
+        var response = client.GetPuzzle(_difficulty, DateOnly.FromDateTime(DateTime.Now.Date));
 
         if (response == null)
         {

@@ -1,13 +1,17 @@
-﻿using Mazes.FrontEnd.Display;
+﻿using System;
+using Mazes.Core.Models;
+using Mazes.FrontEnd.Display;
 
 namespace Mazes.FrontEnd;
 
 public static class EntryPoint
 {
-    public static void Main()
+    public static void Main(string[] arguments)
     {
-        var renderer = new Renderer();
-        
+        var renderer = arguments.Length > 0
+            ? new Renderer(Enum.Parse<Difficulty>(arguments[0]))
+            : new Renderer(Difficulty.Small);
+
         renderer.Run();
     }
 }
