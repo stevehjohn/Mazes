@@ -9,7 +9,7 @@ public static class EntryPoint
     public static void Main(string[] arguments)
     {
         var renderer = arguments.Length > 0
-            ? new Renderer(Enum.Parse<Difficulty>(arguments[0]))
+            ? new Renderer(Enum.Parse<Difficulty>(arguments[0], true))
             : new Renderer(Difficulty.Small);
 
         renderer.Run();
