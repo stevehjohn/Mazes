@@ -53,7 +53,7 @@ public class Renderer : Game
 
         WriteLine("Loading maze...");
 
-        var response = client.GetPuzzle(_difficulty, DateOnly.FromDateTime(DateTime.Now.Date));
+        var response = client.GetPuzzle(_difficulty, DateOnly.FromDateTime(DateTime.UtcNow.Date));
 
         if (response == null)
         {
